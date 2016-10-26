@@ -1,0 +1,9 @@
+<% @orders.each do |order| %>
+	<tr>
+		<td><%= order.quantity %></td>
+		<td><%= order.totalprice %></td>
+		<td><%= link_to 'Show', order, remote: true %></td>
+		<td><%= link_to 'Edit', edit_order_path(order), remote: true %></td>
+		<td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
+	</tr>
+<% end %>   

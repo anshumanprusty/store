@@ -1,0 +1,14 @@
+<div class="add_form">
+	<div class="field">
+		<%= products.label :name %><br>
+		<%= products.text_field :name %>
+	</div>
+	<div class="field">
+		<%= products.label :price %><br>
+		<%= products.text_field :price %>
+	</div>
+	<div class="field">
+		<%= products.check_box :_destroy %><br>
+		<%= products.label :_destroy, "Remove Product" %>
+	</div>
+</div>	

@@ -1,0 +1,154 @@
+<%= form_for(@order) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :category, class: 'control-label' %><br>
+    <%= select_tag "category_dropdown", options_from_collection_for_select(@category, "id", "name"), include_blank: true, class: 'form-control'  %>    
+  </div>  
+
+  <div class="form-group">
+  <div id="anshuman">
+      <%= f.label :product, class: 'control-label'  %><br>
+    <select id="product_dropdown" class="form-control">
+    <option>Select</option>
+    </select>
+    </div>  
+</div>
+
+  <div class="form-group">
+    <%= f.label :quantity, class: 'control-label' %><br>
+    <%= f.text_field :quantity, class: 'form-control' %>
+    <span class="help-block"></span>
+  </div>
+
+  <div class="form-group">
+    <div id="anshuman1">
+    <%= f.label :totalprice, class: 'control-label' %><br>
+    <%= f.number_field :totalprice, class: 'form-control' %>
+  </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Create Order', class: 'btn btn-default', id: 'btnCreateOrder' %>
+  </div>
+
+<% end %>
+
+<script>
+/*$(document).ready(function(){
+
+      $("#new_order").submit(function(e) {
+        //alert("hello");
+        var url = "/orders"; // the script where you handle the form input.
+
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#new_order").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+              //alert(data); // show response from the php script.
+              opener.listOrders();
+              window.close();
+
+           }
+         });
+    e.preventDefault();
+
+});
+});
+
+
+        //alert("Submitted");
+
+  var order_url = "/orders/list";
+
+  $.ajax({
+    //options.async = true;
+    url: order_url,
+    type: 'get',
+    success: function(data) {
+        if(data!=null && data.length>0){
+          window.opener.$("#orderlist").html('');
+          $.each(data,function(index,key){
+            alert(index);
+            window.opener.$("#orderlist").append("<tr><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td colspan=3>Action</td></tr>");
+            //$("#product_dropdown").append("<option value='"+key.id+"'>"+key.name+"</option>");
+          })
+              window.close();}
+            }
+  });
+              //opener.CallParent();
+              //window.close();
+});*/
+</script>
+
+<script type="text/javascript" async="async">
+  $('#category_dropdown').change(function() {
+  //alert("Hello");
+
+  var product_url = "/products/options";
+  //alert(product_url);
+  var product_select = $(this).next('select');
+  //alert(product_select);
+
+//debugger;
+
+  $.ajax({
+    //options.async = true;
+    data:{category_id:$("#category_dropdown").val()},
+    url: product_url,
+    type: 'get',
+    success: function(data) {
+        $("#product_dropdown").empty();
+        if(data!=null && data.length>0){
+          $.each(data,function(index,key){
+            $("#product_dropdown").append("<option value='"+key.id+"'>"+key.name+"</option>");
+          })
+        }
+      //$("#anshuman").html(data);
+
+      //$(document.body).html(data);
+    }
+  });
+});
+
+</script>
+
+<script type="text/javascript">
+    $('#order_quantity').change(function() {
+
+  var product_url1 = "/products/totalprice?product_dropdown=" + $('#product_dropdown').val() + '&order_quantity=' + $('#order_quantity').val();
+  //alert(product_url1);
+  var product_input = $(this).next('input');
+
+ $.ajax({
+    //options.async = true;
+    url: product_url1,
+    method: 'get',
+    success: function(data) {
+    //alert(data);
+    //$('#anshuman1').html(data);
+   
+        //$("#order_totalprice").empty();
+        if(data!=null){
+          //alert(data);
+          $("#order_totalprice").val(data);
+        }
+      //$(document.body).html(data);
+    }
+  });
+
+});
+
+</script>

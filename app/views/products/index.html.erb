@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+<h1>Listing Products</h1>
+
+
+<table id="product" class="table table-striped" border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>      
+      <th align="center" colspan="3"><center>Operations</center></th>
+    </tr>
+  </thead>
+
+  <tbody id="test1">
+    <%= render 'product' %>
+  </tbody>
+</table>
+
+
+<br/>
+
+<div class="form-group" id="formdiv"></div>
+
+<%= link_to 'New Product', new_product_path, remote: true, class: 'btn btn-primary' %>
+
+
+<br/><br/>

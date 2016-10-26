@@ -1,0 +1,26 @@
+<%= form_for @student, remote: true do |f| %>
+  <% if @student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+      <ul>
+      <% @student.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+   <div class="form-group">
+    <%= f.label :name, class: 'control-label'   %><br>
+    <%= f.text_field :name, class: 'form-control'  %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :age, class: 'control-label'   %><br>
+    <%= f.number_field :age, class: 'form-control'  %>
+  </div>
+  <div class="actions">
+    <%= f.submit  class: 'btn btn-default'  %>
+  </div>
+<% end %>

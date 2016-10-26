@@ -1,0 +1,47 @@
+<%= form_for(@category) do |f| %>
+  <% if @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+      <ul>
+      <% @category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <!--<h1>Add Product</h1>-->
+
+  <%= f.fields_for :products do |p| %>
+
+  <% #render :partial => "products", :locals => {products: p} %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+   $('a').click(function(){
+      $('#mydiv1').append('<div class=field><%= p.label :name %><br><%= p.text_field :name, multiple: true %></div><div class=field><%= p.label :price %><br><%= p.text_field :price, multiple: true %></div><div class=field><%= p.check_box :_destroy, multiple: true %><br><%= p.label :_destroy, 'Remove Product' %></div>');
+
+      $('#mydiv1').show();
+   });
+});
+</script>
+
+<p><a href="javasctipt:void(0)" id="a">Add Product</a></p>
+
+<div id="mydiv1" style="display:none">
+
+</div>
+
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>  
+<% end %>

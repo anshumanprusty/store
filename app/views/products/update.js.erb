@@ -1,0 +1,35 @@
+/*alert("Hello");
+
+$("#formdiv").html('');
+
+
+$(document).ready(function (){
+
+        $.ajaxSetup({ cache: false });
+ 
+        $.getJSON("products.json", function(data){ 
+            var html = [];
+ 
+
+            $.each(data, function(index, d){            
+                html.push("<tr><td>", d.name, "</td>",
+                          "<td>", d.price, "</td>", 
+                          "<td>", d.category, "</td></tr>");
+            });
+ 
+ 
+            $("#test1").html(html.join(''));
+        }).error(function(jqXHR, textStatus, errorThrown){ 
+
+            alert("error occurred!");
+        });
+});
+
+*/
+
+$("#test1").html('<%= escape_javascript(render(partial: "product", object: @products)) %>');
+$('#formdiv').html('');
+
+
+
+
