@@ -19,6 +19,8 @@
 
 <br>
 
+<div class="form-group" id="formdiv"></div>
+
 <%# Added Bootstrap data modal attribute %>
 <%= link_to 'New Order', '#new_order_modal', 'data-toggle' => 'modal' %>
 
@@ -43,7 +45,7 @@
 
 
 <script>
-$(document).ready(function(){
+/*$(document).ready(function(){
 
       $("#btnCreateOrder").click(function(e) {
         //alert("data");
@@ -68,7 +70,7 @@ $(document).ready(function(){
 e.preventDefault(); 
 
 });
-});
+});*/
 </script>
 
 <script type="text/javascript">
@@ -88,9 +90,10 @@ e.preventDefault();
             if(data!=null && data.length>0){
               $("#orderlist").html('');
               $.each(data,function(index,key){
-                //alert(index);
-                //$("#orderlist").append("<tr><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td>Show</td><td>Edit</td><td>Destroy</td></tr>");
-                $("#orderlist").html("<%= j render 'table_row' %>");
+                alert(index);
+                $("#orderlist").append("<tr><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td><span onclick=ShowOrder("+key.id+")>Show</span></td><td><span onclick=EditOrder("+key.id+")>Edit</span></td><td><span onclick=DeleteOrder("+key.id+")>Destroy</span></td></tr>");
+
+
               })
 
                   }
@@ -98,13 +101,61 @@ e.preventDefault();
       });
 }
 function EditOrder(orderId){
+  alert(orderId);
 
+     var edit_url = "/orders/"+orderId+"/edit";
+
+      $.ajax({
+        //options.async = true;
+        url: edit_url,
+        type: 'put',
+        success: function(data) {
+            if(data!=null && data.length>0){
+              //$("#orderlist").html('');
+              $.each(data,function(index,key){
+                alert(data);
+              });
+
+                  }
+                }
+      });  
 }
 function DeleteOrder(orderId){
+  alert(orderId);
 
+     var delete_url = "/orders/"+orderId;
+
+      $.ajax({
+        url: delete_url,
+        type: 'delete',
+        success: function(data) {
+            if(data!=null && data.length>0){
+              alert(data);
+              listOrders();
+
+                  }
+                }
+      });  
 }
 function ShowOrder(orderId){
+  alert(orderId);
 
+     var show_url = "/orders/"+orderId;
+
+      $.ajax({
+        //options.async = true;
+        url: show_url,
+        type: 'get',
+        success: function(data) {
+            //alert("data");
+            //alert(data);            
+            if(data!=null){
+              //$("#orderlist").html('');
+                alert(data);
+                $("#formdiv").html('<p><strong>Quantity:</strong>'+data.quantity+'</p><p><strong>Totalprice:</strong>'+data.totalprice+'</p><p><strong>ID:</strong>'+data.id+'</p><%= link_to "Edit", edit_order_path('+data.id+') %> |<%= link_to "Back", orders_path %>');
+                  }
+                }
+      });  
 }
 function SaveOrder(){
 

@@ -1,5 +1,5 @@
 <div id="modal-edit-fields">
-<%= form_for @rating, :html => { :class => "form-horizontal rating" }, remote: true do |f| %>
+<%= form_for @rating, :html => { :class => "form-horizontal rating" } do |f| %>
 
   <% if @rating.errors.any? %>
     <div id="error_expl" class="panel panel-danger">

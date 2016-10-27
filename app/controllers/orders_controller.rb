@@ -13,6 +13,9 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+        @order = Order.find(params[:id])
+        #format.html { redirect_to orders_path, notice: 'Order was successfully created.' }
+        render :json => @order
   end
 
   # GET /orders/new
@@ -24,6 +27,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    @order = Order.find(params[:id])
+    @category = Category.all
+    @product = Product.none
+    render :json => @order     
   end
 
   def list
@@ -35,11 +42,18 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+
+    #@order = @product.Order.new(order_params)
+
+    #@category = Category.find params[:category_dropdown]
+    @product = Product.find(params[:product_dropdown])
+
+
     @order = Order.new(order_params)
 
     respond_to do |format|
       if @order.save
-        #format.html { redirect_to orders_path, notice: 'Order was successfully created.' }
+        format.html { redirect_to orders_path, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
@@ -80,6 +94,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:quantity, :totalprice)
+      params.require(:order).permit(:category_id, :product_id, :quantity, :totalprice)
     end
 end

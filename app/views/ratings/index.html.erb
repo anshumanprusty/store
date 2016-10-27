@@ -21,7 +21,7 @@
         <td><%=l rating.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_rating_path(rating), :class => 'btn btn-default btn-xs', 'data-target' => '#new_student_modal' , 'data-toggle' => 'modal' %>
+                      edit_rating_path(rating), :class => 'btn btn-default btn-xs', 'data-target' => '#edit_student_modal' , 'data-toggle' => 'modal' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       rating_path(rating),
                       :method => :delete,
@@ -35,12 +35,30 @@
 
 <%= link_to "new", '#new_student_modal', 'data-toggle' => 'modal' %>
 
-<div class="modal fade" id="new_student_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="new_student_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Create new student</h4>
+        <h4 class="modal-title" id="myModalLabel1">Create new student</h4>
+      </div>
+      <div class="modal-body">
+        <%# Render the new person form (passing modal => true to enable remote => true) %>
+        <%= render 'form' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit_student_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel2">Edit student</h4>
       </div>
       <div class="modal-body">
         <%# Render the new person form (passing modal => true to enable remote => true) %>

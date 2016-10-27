@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
-#binding.pry
+binding.pry
     if params[:category_id].present?
       @category = Category.find(params[:category_id])
       @products = @category.products.all
