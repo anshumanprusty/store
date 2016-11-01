@@ -19,9 +19,7 @@
   <div class="form-group">
   <div id="anshuman">
       <%= f.label :product, class: 'control-label'  %><br>
-    <select id="product_dropdown" class="form-control">
-    <option>Select</option>
-    </select>
+    <%= select_tag "product_dropdown", options_from_collection_for_select(@product, "id", "name"), include_blank: true, class: 'form-control'  %>        
     </div>  
 </div>
 
@@ -39,9 +37,10 @@
   </div>
 
   <div class="actions">
-    <%= f.submit 'Create Order', class: 'btn btn-default', id: 'btnCreateOrder' %>
+    <%= f.submit "Create Order", class: 'btn btn-default', id: 'btnCreateOrder'%>
+    <%= f.submit "Update Order", class: 'btn btn-default', id: 'btnUpdateOrder',style:'display:none;' %>
   </div>
-
+<input type="text" name="orderId" id="txtorderId">
 <% end %>
 
 <script>
@@ -108,6 +107,7 @@
     //options.async = true;
     data:{category_id:$("#category_dropdown").val()},
     url: product_url,
+    async:false,  
     type: 'get',
     success: function(data) {
         $("#product_dropdown").empty();

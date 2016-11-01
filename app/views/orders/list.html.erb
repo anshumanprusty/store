@@ -1,0 +1,36 @@
+<div class="container">
+<h1>Listing Orders</h1>
+
+<table id="order" class="table table-striped" border="1">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Product</th>        
+      <th>Quantity</th>
+      <th>Totalprice</th>
+      <th colspan="3"><center>Action</center></th>
+    </tr>
+  </thead>
+
+  <tbody id="orderlist">
+
+<% @orders.each do |order| %>
+	<tr>
+<%
+@c = Category.find(order.category_id).name
+@p = Product.find(order.product_id).name
+%>
+		<td><%= @c %></td>
+		<td><%= @p %></td>			
+		<td><%= order.quantity %></td>
+		<td><%= order.totalprice %></td>
+		<td><%= link_to 'Show', order, remote: true %></td>
+		<td><%= link_to 'Edit', edit_order_path(order), remote: true %></td>
+		<td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
+	</tr>
+<% end %>   
+
+  </tbody>
+</table>
+
+</div>

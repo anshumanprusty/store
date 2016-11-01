@@ -6,6 +6,8 @@
 <table id="order" class="table table-striped" border="1">
   <thead>
     <tr>
+      <th>Category</th>
+      <th>Product</th>        
       <th>Quantity</th>
       <th>Totalprice</th>
       <th colspan="3"><center>Action</center></th>
@@ -30,7 +32,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Create new person</h4>
+        <h4 class="modal-title" id="myModalLabelCreate">Create Order</h4>
+        <h4 class="modal-title" id="myModalLabelEdit" style="display:none;">Edit Order</h4>
       </div>
       <div class="modal-body">
         <%# Render the new person form (passing modal => true to enable remote => true) %>
@@ -45,8 +48,14 @@
 
 
 <script>
-/*$(document).ready(function(){
+$(document).ready(function(){
 
+              $('#myModalLabelCreate').show();
+              $('#myModalLabelEdit').hide();    
+
+              $('#btnCreateOrder').show();
+              $('#btnUpdateOrder').hide();   
+              
       $("#btnCreateOrder").click(function(e) {
         //alert("data");
         
@@ -64,14 +73,47 @@
               listOrders();
               //window.close();
               //$.modal.close();
+          
 
            }
          });
 e.preventDefault(); 
 
 });
-});*/
+
+
+      $("#btnUpdateOrder").click(function(e) {
+
+        
+        var url = "/orders/"+$("#txtorderId").val(); // the script where you handle the form input.
+
+        alert(url);
+    $.ajax({
+           type: "PATCH",
+           url: url,
+           data: $("#new_order").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+              //alert("Hello");
+              $('#new_order_modal').modal('hide');
+
+              listOrders();
+              $('#myModalLabelCreate').show();
+              $('#myModalLabelEdit').hide();    
+
+              $('#btnCreateOrder').show();
+              $('#btnUpdateOrder').hide();                  
+              //window.close();
+              //$.modal.close();
+
+           }
+         });
+e.preventDefault(); 
+
+});
+});
 </script>
+
 
 <script type="text/javascript">
   $(function(){
@@ -90,9 +132,8 @@ e.preventDefault();
             if(data!=null && data.length>0){
               $("#orderlist").html('');
               $.each(data,function(index,key){
-                alert(index);
-                $("#orderlist").append("<tr><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td><span onclick=ShowOrder("+key.id+")>Show</span></td><td><span onclick=EditOrder("+key.id+")>Edit</span></td><td><span onclick=DeleteOrder("+key.id+")>Destroy</span></td></tr>");
-
+                //alert(index);
+                $("#orderlist").append("<tr><td>"+key.category_id+"</td><td>"+key.product_id+"</td><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td><span onclick=ShowOrder("+key.id+")>Show</span></td><td><span onclick=EditOrder("+key.id+") data-toggle='modal' data-target='#new_order_modal'>Edit</span></td><td><span onclick=DeleteOrder("+key.id+")>Destroy</span></td></tr>");
 
               })
 
@@ -108,20 +149,28 @@ function EditOrder(orderId){
       $.ajax({
         //options.async = true;
         url: edit_url,
-        type: 'put',
+        type: 'get',
         success: function(data) {
-            if(data!=null && data.length>0){
-              //$("#orderlist").html('');
-              $.each(data,function(index,key){
-                alert(data);
-              });
+            if(data!=null){ 
+                //$("#new_order_modal").modal("show");
+                $('#myModalLabelCreate').hide();
+                $('#myModalLabelEdit').show();    
 
-                  }
-                }
+                $('#btnCreateOrder').hide();
+                $('#btnUpdateOrder').show();    
+
+                $("#category_dropdown").val(data.category_id);
+                $("#category_dropdown").trigger("change");
+                $("#product_dropdown").val(data.product_id);
+                $("#order_quantity").val(data.quantity);
+                $("#order_totalprice").val(data.totalprice);
+                $("#txtorderId").val(orderId);
+            }
+        }
       });  
 }
 function DeleteOrder(orderId){
-  alert(orderId);
+  //alert(orderId);
 
      var delete_url = "/orders/"+orderId;
 
@@ -129,12 +178,10 @@ function DeleteOrder(orderId){
         url: delete_url,
         type: 'delete',
         success: function(data) {
-            if(data!=null && data.length>0){
-              alert(data);
+              //alert("data");
               listOrders();
 
-                  }
-                }
+               }
       });  
 }
 function ShowOrder(orderId){
@@ -151,14 +198,15 @@ function ShowOrder(orderId){
             //alert(data);            
             if(data!=null){
               //$("#orderlist").html('');
-                alert(data);
-                $("#formdiv").html('<p><strong>Quantity:</strong>'+data.quantity+'</p><p><strong>Totalprice:</strong>'+data.totalprice+'</p><p><strong>ID:</strong>'+data.id+'</p><%= link_to "Edit", edit_order_path('+data.id+') %> |<%= link_to "Back", orders_path %>');
+                //alert(data);
+                $("#formdiv").html('<p><strong>Quantity:</strong>'+data.quantity+'</p><p><strong>Totalprice:</strong>'+data.totalprice+'</p><p><strong>ID:</strong>'+data.id+'</p><p><span onclick=EditOrder('+data.id+') data-toggle="modal" data-target="#new_order_modal">Edit</span>&nbsp;|&nbsp;<span onclick="clearDiv()">Back</span>');
                   }
                 }
       });  
 }
-function SaveOrder(){
 
+function clearDiv(){
+  $("#formdiv").html('');
 }
 </script>
 
