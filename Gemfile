@@ -20,7 +20,6 @@ gem 'jquery-rails'
 gem 'pry'
 
 
-
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -41,10 +40,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
-	# Use mysql as the database for Active Record
-	gem 'mysql2', '>= 0.3.13', '< 0.5'  
-end
 
+end
 
 group :production do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -54,6 +51,9 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+
+  # Use mysql as the database for Active Record
+  gem 'mysql2', '>= 0.3.13', '< 0.5'  
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
