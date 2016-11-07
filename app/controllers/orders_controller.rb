@@ -35,7 +35,13 @@ class OrdersController < ApplicationController
 
   def list
     @orders = Order.all
-    render :json => @orders
+
+    @myhash = []
+    @orders.each do |index|
+       @myhash << {id: index.id, quantity: index.quantity,totalprice: index.totalprice, category_name: Category.find(index.category_id).name,product_name: Product.find(index.product_id).name,price: Product.find(index.product_id).price}
+    end
+
+    render :json => @myhash
   end
 
 

@@ -7,9 +7,10 @@
   <thead>
     <tr>
       <th>Category</th>
-      <th>Product</th>        
+      <th>Product</th> 
+      <th>Unit Price</th>              
       <th>Quantity</th>
-      <th>Totalprice</th>
+      <th>Total Price</th>
       <th colspan="3"><center>Action</center></th>
     </tr>
   </thead>
@@ -50,11 +51,6 @@
 <script>
 $(document).ready(function(){
 
-              $('#myModalLabelCreate').show();
-              $('#myModalLabelEdit').hide();    
-
-              $('#btnCreateOrder').show();
-              $('#btnUpdateOrder').hide();   
               
       $("#btnCreateOrder").click(function(e) {
         //alert("data");
@@ -133,7 +129,7 @@ e.preventDefault();
               $("#orderlist").html('');
               $.each(data,function(index,key){
                 //alert(index);
-                $("#orderlist").append("<tr><td>"+key.category_id+"</td><td>"+key.product_id+"</td><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td><span onclick=ShowOrder("+key.id+")>Show</span></td><td><span onclick=EditOrder("+key.id+") data-toggle='modal' data-target='#new_order_modal'>Edit</span></td><td><span onclick=DeleteOrder("+key.id+")>Destroy</span></td></tr>");
+                $("#orderlist").append("<tr><td>"+key.category_name+"</td><td>"+key.product_name+"</td><td>"+key.price+"</td><td>"+key.quantity+"</td><td>"+key.totalprice+"</td><td><span onclick=ShowOrder("+key.id+")>Show</span></td><td><span onclick=EditOrder("+key.id+") data-toggle='modal' data-target='#new_order_modal'>Edit</span></td><td><span onclick=DeleteOrder("+key.id+")>Destroy</span></td></tr>");
 
               })
 

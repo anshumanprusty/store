@@ -5,9 +5,10 @@
   <thead>
     <tr>
       <th>Category</th>
-      <th>Product</th>        
+      <th>Product</th>  
+      <th>Unit Price</th>  
       <th>Quantity</th>
-      <th>Totalprice</th>
+      <th>Total Price</th>
       <th colspan="3"><center>Action</center></th>
     </tr>
   </thead>
@@ -16,12 +17,9 @@
 
 <% @orders.each do |order| %>
 	<tr>
-<%
-@c = Category.find(order.category_id).name
-@p = Product.find(order.product_id).name
-%>
-		<td><%= @c %></td>
-		<td><%= @p %></td>			
+		<td><%= Category.find(order.category_id).name %></td>
+		<td><%= Product.find(order.product_id).name %></td>
+    <td><%= Product.find(order.product_id).price %></td>
 		<td><%= order.quantity %></td>
 		<td><%= order.totalprice %></td>
 		<td><%= link_to 'Show', order, remote: true %></td>
